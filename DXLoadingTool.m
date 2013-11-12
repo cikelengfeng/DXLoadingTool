@@ -11,8 +11,8 @@
 
 @property (strong) LoadingToolInterceptor loadingInterceptor;
 @property (strong) LoadingToolInterceptor idleInterceptor;
-@property (strong) NSDate *timeoutLine;
-@property (assign) BOOL paused;
+@property (assign) NSTimeInterval startTime;
+@property (assign) NSTimeInterval timeout;
 @property (weak) UIView *targetView;
 
 @end
@@ -21,16 +21,23 @@
 
 @end
 
+@interface DXLoadingTool (private)
+
++ (void)innerHideLoadingForID:(NSString *)identifier;
+
+@end
+
 @implementation DXLoadingTool
 
 static NSString *LOADING_INTERCEPTOR_KEY = @"loading_tool_loading_interceptor";
 static NSString *IDLE_INTERCEPTOR_KEY = @"loading_tool_idle_interceptor";
 static NSMutableDictionary *idInfoMap;
-
+static NSTimeInterval leastShowTime;
 + (void)load
 {
     [super load];
     idInfoMap = [NSMutableDictionary dictionary];
+    leastShowTime = 0.5;
 }
 
 + (void)showLoadingInDefaultModeForView:(UIView *)view ID:(NSString *)identifier timeout:(NSTimeInterval)timeout
@@ -124,7 +131,8 @@ static NSMutableDictionary *idInfoMap;
         idInfoMap[identifier] = info;
         info.loadingInterceptor = [loadingInterceptor copy];
         info.idleInterceptor = [idleInterceptor copy];
-        info.timeoutLine = [NSDate dateWithTimeIntervalSinceNow:timeout];
+        info.startTime = [[NSDate date] timeIntervalSince1970];
+        info.timeout = timeout;
         info.targetView = view;
         [self performSelector:@selector(hideLoadingForID:) withObject:identifier afterDelay:timeout];
     }
@@ -155,13 +163,22 @@ static NSMutableDictionary *idInfoMap;
 + (void)hideLoadingForID:(NSString *)identifier
 {
     LoadingInfo *info = idInfoMap[identifier];
+    NSTimeInterval hideDelay = MAX(0,leastShowTime - ([[NSDate date] timeIntervalSince1970] - info.startTime));
+    NSLog(@"start time %f now time %f hidedelay %f",info.startTime,[[NSDate date] timeIntervalSince1970],hideDelay);
+    [self cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideLoadingForID:) object:identifier];
+    [self cancelPreviousPerformRequestsWithTarget:self selector:@selector(innerHideLoadingForID:) object:identifier];
+    [self performSelector:@selector(innerHideLoadingForID:) withObject:identifier afterDelay:hideDelay];
+}
+
++ (void)innerHideLoadingForID:(NSString *)identifier
+{
+    LoadingInfo *info = idInfoMap[identifier];
     LoadingToolInterceptor idle = info.idleInterceptor;
     UIView *view = info.targetView;
     if (idle) {
         idle(view);
     }
     [idInfoMap removeObjectForKey:identifier];
-    [self cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideLoadingForID:) object:identifier];
 }
 
 + (BOOL)isIdPausedLoading:(NSString *)identifier
