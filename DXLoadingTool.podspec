@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'DXLoadingTool'
-  s.version      = '1.0'
+  s.version      = '1.1.1'
   s.summary      = 'loading tool for CocoaTouch'
 
   s.description  = '<<-DESC
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.authors       = {'cikelengfeng'=>'cikelengfeng@gmail.com'}
   s.platform     = :ios,'5.0'
   s.source       = {:git => 'https://github.com/cikelengfeng/DXLoadingTool.git',
-                   :tag => '1.0'}
+                   :tag => '1.1.1'}
   s.source_files = 'DXLoadingTool.{h,m}'
   s.requires_arc = true
 end
