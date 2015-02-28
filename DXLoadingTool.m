@@ -150,7 +150,7 @@ static NSTimeInterval leastShowTime;
     info.targetView = nil;
 }
 
-+ (void)resumeLoadingForView:(UIView *)view ID:(NSString *)identifier
++ (void)resumeLoadingForID:(NSString *)identifer view:(UIView *)view
 {
     LoadingInfo *info = (LoadingInfo *)idInfoMap[identifier];
     LoadingToolInterceptor loadingInterceptor = info.loadingInterceptor;
@@ -181,7 +181,7 @@ static NSTimeInterval leastShowTime;
     [idInfoMap removeObjectForKey:identifier];
 }
 
-+ (BOOL)isIdPausedLoading:(NSString *)identifier
++ (BOOL)isIDPausedLoading:(NSString *)identifier
 {
     return identifier.length > 0 && !((LoadingInfo *)idInfoMap[identifier]).targetView;
 }

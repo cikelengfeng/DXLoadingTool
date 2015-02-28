@@ -30,10 +30,10 @@ typedef void(^LoadingToolInterceptor)(UIView *view);
 /**
  *use in tableview context,MUST be balanced with pauseLoadingForID: call
  */
-+ (void)resumeLoadingForView:(UIView *)view ID:(NSString *)identifer;
++ (void)resumeLoadingForID:(NSString *)identifer view:(UIView *)view;
 
 + (void)hideLoadingForID:(NSString *)identifer;
 
-+ (BOOL)isIdPausedLoading:(NSString *)identifer;
++ (BOOL)isIDPausedLoading:(NSString *)identifer;
 
 @end
