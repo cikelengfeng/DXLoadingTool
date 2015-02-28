@@ -150,7 +150,7 @@ static NSTimeInterval leastShowTime;
     info.targetView = nil;
 }
 
-+ (void)resumeLoadingForID:(NSString *)identifer view:(UIView *)view
++ (void)resumeLoadingForID:(NSString *)identifier view:(UIView *)view
 {
     LoadingInfo *info = (LoadingInfo *)idInfoMap[identifier];
     LoadingToolInterceptor loadingInterceptor = info.loadingInterceptor;

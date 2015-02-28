@@ -10,30 +10,30 @@
 
 typedef void(^LoadingToolInterceptor)(UIView *view);
 
-+ (void)showLoadingInDefaultModeForView:(UIView *)view ID:(NSString *)identifer;
-+ (void)showLoadingInDefaultModeForView:(UIView *)view ID:(NSString *)identifer timeout:(NSTimeInterval)timeout;
++ (void)showLoadingInDefaultModeForView:(UIView *)view ID:(NSString *)identifier;
++ (void)showLoadingInDefaultModeForView:(UIView *)view ID:(NSString *)identifier timeout:(NSTimeInterval)timeout;
 
-+ (void)showLoadingInRotateModeForView:(UIView *)view ID:(NSString *)identifer;
-+ (void)showLoadingInRotateModeForView:(UIView *)view ID:(NSString *)identifer timeout:(NSTimeInterval)timeout;
-+ (void)showLoadingInScaleModeForView:(UIView *)view ID:(NSString *)identifer;
-+ (void)showLoadingInScaleModeForView:(UIView *)view ID:(NSString *)identifer timeout:(NSTimeInterval)timeout;
-+ (void)showLoadingInAlphaModeForView:(UIView *)view ID:(NSString *)identifer;
-+ (void)showLoadingInAlphaModeForView:(UIView *)view ID:(NSString *)identifer timeout:(NSTimeInterval)timeout;
++ (void)showLoadingInRotateModeForView:(UIView *)view ID:(NSString *)identifier;
++ (void)showLoadingInRotateModeForView:(UIView *)view ID:(NSString *)identifier timeout:(NSTimeInterval)timeout;
++ (void)showLoadingInScaleModeForView:(UIView *)view ID:(NSString *)identifier;
++ (void)showLoadingInScaleModeForView:(UIView *)view ID:(NSString *)identifier timeout:(NSTimeInterval)timeout;
++ (void)showLoadingInAlphaModeForView:(UIView *)view ID:(NSString *)identifier;
++ (void)showLoadingInAlphaModeForView:(UIView *)view ID:(NSString *)identifier timeout:(NSTimeInterval)timeout;
 /**
- *@param identifer this ID MUST be unique in application context
+ *@param identifier this ID MUST be unique in application context
  */
-+ (void)showLoadingForView:(UIView *)view ID:(NSString *)identifer loadingInterceptor:(LoadingToolInterceptor)loadingInterceptor idleInterceptor:(LoadingToolInterceptor)idleInterceptor timeout:(NSTimeInterval)timeout;
++ (void)showLoadingForView:(UIView *)view ID:(NSString *)identifier loadingInterceptor:(LoadingToolInterceptor)loadingInterceptor idleInterceptor:(LoadingToolInterceptor)idleInterceptor timeout:(NSTimeInterval)timeout;
 /**
  *use in tableview context,MUST be balanced with resumeLoadingForView: call
  */
-+ (void)pauseLoadingForID:(NSString *)identifer;
++ (void)pauseLoadingForID:(NSString *)identifier;
 /**
  *use in tableview context,MUST be balanced with pauseLoadingForID: call
  */
-+ (void)resumeLoadingForID:(NSString *)identifer view:(UIView *)view;
++ (void)resumeLoadingForID:(NSString *)identifier view:(UIView *)view;
 
-+ (void)hideLoadingForID:(NSString *)identifer;
++ (void)hideLoadingForID:(NSString *)identifier;
 
-+ (BOOL)isIDPausedLoading:(NSString *)identifer;
++ (BOOL)isIDPausedLoading:(NSString *)identifier;
 
 @end
